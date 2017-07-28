@@ -1,0 +1,91 @@
+MUA-1		1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17	18	19	20	21	22	23	24	25	26	27	28	29	30
+
+on/off
+Set Point
+Acctual Temp
+
+HEX
+
+From DES SWT
+To DES RWT
+HEX_1_RWT
+HEX_1_SWT
+P1 on/off/amp
+P2 on/off/amp
+CV 9 /CV1 on/off
+
+HP
+
+HP SourceRWT
+HP1 Stage1 on/off
+HP1 Stage2 on/off
+Heat/cool
+Status Amps
+HP2 stage1 on/off
+HP2 Stage2 on/off
+Heat/cool
+Status Amps
+P3 on/off/amps
+P4 on/off/amps
+HP_load_SWT
+HP_DHWST
+HP_DHWRT
+CV#10 on/off
+HP.load RWT
+
+Boiler 1
+
+BLR 1 on/off
+CV-4 on /off
+P5 amps
+P6 amps
+PSI on unit
+PSI DHW Production
+PSI Boiler Supply
+
+Boiler 2
+
+BLR 2 on/off
+P12 amps
+P13 amps
+BLR_DHW_SWT
+PSI on unit
+PSI DHW Production
+PSI Boiler Supply
+
+DHW   
+
+CV-2 on/off
+DHWT_SWT
+DHWT_RWT
+CV-3 on/off
+DHW_BLR_RWT
+DHW_SWT
+P8 on/off
+DHWT3456SWT
+
+ServerRM
+
+HP1 Valve
+HP2 Valve
+
+RAD
+
+CV-8%
+P11 on/off Amps
+RADZ1 SWT sp/ act.
+RADZ1_RWT
+CV12 %
+
+CV-7%
+P10 on/off PSI
+RADZ2 SWT sp/ act.
+RADZ2_RWT
+
+CV-6%
+P9 on/off AmpsPSI
+RADZ3 SWT sp/ act.
+RADZ3_RWT
+
+
+
