@@ -6,29 +6,32 @@ Public Class Form1
     '    The process starts by making a New big array, Then fills it With the existing report, Then eventually overwrites the file And add a New column
     '    based ReadOnly the numbers taken from a parsed csv file that I add To the big array
     Dim file_location As String = ""
-    Dim day_num As Integer = 1
+
+    Dim day_num As String = "1"
 
     Dim month_num As String = ""
 
     Dim year_num As String = ""
 
-    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
-        Console.WriteLine(ListBox1.SelectedIndex)
+    Dim day As Integer = CInt(day_num)
 
-        Dim file_location As String = ""
+    Dim excel As Application = New Application
+
+    Public Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
+        Console.WriteLine(ListBox1.SelectedIndex)
 
         If ListBox1.SelectedIndex = 0 Then
             file_location = "C:\Documents and Settings\operator\My Documents\DELTA\reports\"
         End If
         If ListBox1.SelectedIndex = 1 Then
 
-            file_location = file_location = "C:\Users\Jbrisson\Documents\Visual Studio 2015\Projects\WindowsApplication2\WindowsApplication2\bin\Debug\"
+            file_location = "C:\Users\Jbrisson\Documents\Visual Studio 2015\Projects\DELTA_report_generator-master\DELTA_report_generator-master\WindowsApplication2\WindowsApplication2\bin\Debug\"
         End If
 
         Console.WriteLine(file_location)
     End Sub
 
-    Private Sub DateTimePicker1_ValueChanged(sender As Object, e As EventArgs) Handles DateTimePicker1.ValueChanged
+    Public Sub DateTimePicker1_ValueChanged(sender As Object, e As EventArgs) Handles DateTimePicker1.ValueChanged
         'when the date is picked, the values are parsed, and stored into the variables day_num, month_num, year_num for later use
 
         Dim Datestring As String = DateTimePicker1.Value
@@ -40,7 +43,7 @@ Public Class Form1
             index += 1
         End While
 
-        day_num = CInt(DATE_array(0))
+        day_num = DATE_array(0)
 
         month_num = MonthName(CInt(DATE_array(1)))
 
@@ -55,90 +58,113 @@ Public Class Form1
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         'starts the process
 
-        Dim old_report(10000, 10000) As String
+        Dim daily_report(1000, 10) As Object
 
-        read_file(file_location, old_report)
-        '^uses the function to fill the array with existing numbers from the report file in appropriate location
+        daily_report = excel_into_array(file_location, daily_report, day_num & ".xlsx", 1)
 
-        ' write_tofile(file_location, old_report)
+        Console.WriteLine("successcscss")
 
+        For a As Integer = 1 To 6
+
+            Dim monthly_report(100, 50) As Object
+
+            monthly_report = excel_into_array(file_location, monthly_report, "monthly_report.xlsx", a)
+            add_numbers(monthly_report, daily_report)
+            array_into_excel(monthly_report, file_location, "monthly_report.xlsx", a)
+            Console.WriteLine(CStr(a))
+        Next
+        excel_quit()
     End Sub
 
-    Private Function read_file(ByVal filelocation As String, report As String(,))
-        'to get the old report numbers
+    Private Function excel_into_array(filelocation As String, report(,) As Object, file_name As String, i As Integer)
 
-        Console.WriteLine(filelocation & month_num & year_num & "\" & "report" & month_num & year_num & ".txt")
+        Dim filename As String = (filelocation & month_num & year_num & "\" & file_name)
 
-        Dim filereader_1 As System.IO.StreamReader = My.Computer.FileSystem.OpenTextFileReader(filelocation & month_num & year_num & "\" & "report" & month_num & year_num & ".txt")
-        'Dim filereader_1 As System.IO.StreamReader = My.Computer.FileSystem.OpenTextFileReader("C:\Users\Matt\Documents\GitHub\DELTA_report_generator\reportJuly2017.txt")
-        'starts to open the present version of the report, based on where it is stored
+        Console.WriteLine(filename)
 
-        Dim i As Integer = 0
-        Dim j As Integer = 1
-        Do
-            Do
+        Dim workbook1 As Workbook = excel.Workbooks.Open(filename)
 
-                report(i, j) = Strings.Split(filereader_1.ReadLine, "    ")(j)
+        Dim sheet As Worksheet = workbook1.Sheets(i)
 
-                j += 1
-                'inputs the numbers already present in the reports
+        Dim r As Range = sheet.UsedRange
 
-            Loop Until Strings.Split(filereader_1.ReadLine, "    ")(j) = ""
+        report = r.Value(XlRangeValueDataType.xlRangeValueDefault)
 
-            i += 1
-        Loop Until filereader_1.Peek = -1
+        If report IsNot Nothing Then
 
-        'To test
+            Console.WriteLine("Length: {0}", report.Length)
 
-        Dim filereader_2 As System.IO.StreamReader = My.Computer.FileSystem.OpenTextFileReader(filelocation & month_num & year_num & "\" & "report" & month_num & year_num & ".txt")
-        Do
-            Do
+            ' Get bounds of the array.
+            Dim bound0 As Integer = report.GetUpperBound(0)
+            Dim bound1 As Integer = report.GetUpperBound(1)
 
-                Console.WriteLine(report(i, j))
-                'Console.WriteLine(TAB)
+            Console.WriteLine("Dimension 0: {0}", bound0)
+            Console.WriteLine("Dimension 1: {0}", bound1)
 
-                j += 1
-                'inputs the numbers already present in the reports
+            ' Loop over all elements.
+            For j As Integer = 1 To bound0
+                For x As Integer = 1 To bound1
+                    Dim s1 As String = report(j, x)
+                    Console.Write(s1 & " ")
 
-            Loop Until report(i, j) = ""
-
-            i += 1
-        Loop Until filereader_1.Peek = -1
-
+                Next
+                Console.WriteLine()
+            Next
+        End If
         Return report
+        workbook1.Close(True, )
+    End Function
+
+    Private Function add_numbers(monthly_report(,) As Object, daily_report(,) As Object)
+
+        Dim bound0 As Integer = daily_report.GetUpperBound(0)
+
+        For index1 As Integer = 1 To 46
+
+            For index2 As Integer = 1 To bound0
+
+                'Console.WriteLine(daily_report(index2, 1))
+                'Console.WriteLine(daily_report(index2, 5))
+                'Console.WriteLine(monthly_report(index1, 2))
+
+                If monthly_report(index1, 2) = daily_report(index2, 1) Then
+                    Dim location As Integer = day + 2
+
+                    monthly_report(index1, (location)) = daily_report(index2, 5)
+                    'Console.WriteLine(monthly_report(index1, 2))
+                    'Console.WriteLine(daily_report(index2, 5))
+                    'Console.WriteLine(monthly_report(index1, (day + 2)))
+                    'Console.WriteLine("a")
+
+                End If
+                index2 += 1
+
+            Next
+            index1 += 1
+            Next
 
     End Function
 
-    'Private Function write_tofile(ByVal filelocation As String, ParamArray report As String()())
+    Private Function array_into_excel(report(,) As Object, filelocation As String, file_name As String, i As Integer)
 
-    '    'to write the new report, with the added column
-    '    Dim filewriter As System.IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(filelocation)
+        Dim filename As String = (filelocation & month_num & year_num & "\" & file_name)
 
-    '    Dim countercolumn As Integer = 0
-    '    Dim counterline As Integer = 0
-    '    Do
-    '        Do
-    '            filewriter.WriteLine(report(counterline)(countercolumn) + TAB())
-    '            countercolumn += 1
-    '            'iterate to write the first line of the report
-    '        Loop Until countercolumn = 33
+        Console.WriteLine(filename)
 
-    '        'iterate to write all lines
-    '        counterline += 1
+        Dim workbook2 As Workbook = excel.Workbooks.Open(filename)
 
-    '    Loop Until counterline = 100
+        Dim sheet1 As Worksheet = workbook2.Sheets(i)
 
-    'End Function
 
-    Private Function get_csv_data(csv_file_path As String)
-        Dim source() As String = File.ReadAllLines(csv_file_path)
-        Dim fields(source.Length)
-        Dim index = 0
-        For Each element In source
-            fields(index) = Split(source(index), Chr(34) + "," + Chr(34))
-            index = index + 1
-        Next
-        Return fields
+        sheet1.Range("A1:AJ50").Value = report
+
+        workbook2.Close(True,)
+
     End Function
+
+    Sub excel_quit()
+        excel.Quit()
+    End Sub
+
 
 End Class
