@@ -28,22 +28,21 @@ Partial Class Form1
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ListBox1 = New System.Windows.Forms.ListBox()
+        Me.ListBox2 = New System.Windows.Forms.ListBox()
         Me.SuspendLayout()
         '
         'DateTimePicker1
         '
-        Me.DateTimePicker1.Location = New System.Drawing.Point(49, 53)
-        Me.DateTimePicker1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.DateTimePicker1.Location = New System.Drawing.Point(37, 43)
         Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(308, 22)
+        Me.DateTimePicker1.Size = New System.Drawing.Size(232, 20)
         Me.DateTimePicker1.TabIndex = 0
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(49, 86)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button1.Location = New System.Drawing.Point(37, 70)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(308, 28)
+        Me.Button1.Size = New System.Drawing.Size(231, 23)
         Me.Button1.TabIndex = 1
         Me.Button1.Text = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
@@ -51,10 +50,9 @@ Partial Class Form1
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(176, 9)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label1.Location = New System.Drawing.Point(132, 7)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(51, 17)
+        Me.Label1.Size = New System.Drawing.Size(39, 13)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Label1"
         '
@@ -67,25 +65,32 @@ Partial Class Form1
         'ListBox1
         '
         Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.ItemHeight = 16
         Me.ListBox1.Items.AddRange(New Object() {"C:\Documents and Settings\operator\My Documents\DELTA\reports\ ", "C:\Users\Jbrisson\Documents\Visual Studio 2015\Projects\WindowsApplication2\Windo" &
                 "wsApplication2\bin\Debug\JULY2017"})
-        Me.ListBox1.Location = New System.Drawing.Point(49, 122)
-        Me.ListBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ListBox1.Location = New System.Drawing.Point(37, 99)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(308, 68)
+        Me.ListBox1.Size = New System.Drawing.Size(232, 56)
         Me.ListBox1.TabIndex = 3
+        '
+        'ListBox2
+        '
+        Me.ListBox2.FormattingEnabled = True
+        Me.ListBox2.Items.AddRange(New Object() {"Excel 2003, (.xls)", "Excel 2013, (.xlsx)"})
+        Me.ListBox2.Location = New System.Drawing.Point(37, 162)
+        Me.ListBox2.Name = "ListBox2"
+        Me.ListBox2.Size = New System.Drawing.Size(231, 95)
+        Me.ListBox2.TabIndex = 4
         '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(414, 231)
+        Me.ClientSize = New System.Drawing.Size(310, 291)
+        Me.Controls.Add(Me.ListBox2)
         Me.Controls.Add(Me.ListBox1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.DateTimePicker1)
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "Form1"
         Me.Text = "Form1"
         Me.ResumeLayout(False)
@@ -98,4 +103,5 @@ Partial Class Form1
     Friend WithEvents Label1 As Label
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ListBox1 As ListBox
+    Friend WithEvents ListBox2 As ListBox
 End Class
