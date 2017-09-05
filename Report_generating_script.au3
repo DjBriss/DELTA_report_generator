@@ -15,7 +15,7 @@ GetDateInfo()
 foldercheck()
 Delta()
 Move_report()
-If FileExists($path & $month & $year & "\" & $day & ".xls") Then 
+If FileExists($path & $month & $year & "\" & $day & ".xls") Then
 ;MsgBox($MB_OK,"Title", "This is before the report generatior")
 report_generator()
 Sleep(1000)
@@ -24,12 +24,13 @@ backup_report()
 EndIf
 
 Func Delta()
-If Not WinExists("ORCAview - WAL")  Then
+If WinExists("ORCAview - WAL")  Then
+   WinClose("ORCAview - WAL")
+EndIf
 Run("C:\Program Files\Delta Controls\3.33\System\ORCAview.exe")
 WinWait("Logon")
 Login()
 WinWait("ORCAview - WAL")
-EndIf
 WinActivate("ORCAview - WAL")
 Gotoreport()
 Savereport($month, $day, $year)
@@ -41,7 +42,7 @@ Func foldercheck()
 	  DirCreate($path & $month & $year)
 	  FileCopy($path & "monthly_report_mastercopy.xls", $path & $month & $year & "\monthly_report.xls")
    EndIf
-   
+
    If Not FileExists($path & $month & $year & "\monthly_report.xls") Then
 	  FileCopy($path & "monthly_report_mastercopy.xls", $path & $month & $year & "\monthly_report.xls")
    EndIf
@@ -81,7 +82,7 @@ Func Savereport($monthname, $day, $year)
    ControlClick("Navigator - Reports","","[CLASS:SysListView32; INSTANCE:1]", "right",1,92,81)
    ControlSend("Navigator - Reports","","[CLASS:SysListView32; INSTANCE:1]", "e")
    WinWait("Exporting Records")
-EndFunc  
+EndFunc
 
 Func Move_report()
    FileMove($path & "report.xls",$path & $month & $year & "\" & $day & ".xls",1)
@@ -122,7 +123,7 @@ EndFunc
 
 Func time_in_report()
    Local $workbook = _ExcelBookOpen($path & $month & $year & "\monthly_report.xls")
-   _ExcelWriteCell( $workbook, @Hour & ":" & @Min, 2, ($day + 3)) 
+   _ExcelWriteCell( $workbook, @Hour & ":" & @Min, 2, ($day + 3))
    Sleep(1000)
    _ExcelBookClose($workbook)
 EndFunc
