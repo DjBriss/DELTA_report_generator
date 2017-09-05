@@ -26,6 +26,7 @@ EndIf
 Func Delta()
 If WinExists("ORCAview - WAL")  Then
    WinClose("ORCAview - WAL")
+   Sleep (2000)
 EndIf
 Run("C:\Program Files\Delta Controls\3.33\System\ORCAview.exe")
 WinWait("Logon")
