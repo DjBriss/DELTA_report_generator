@@ -22,14 +22,15 @@ EndIf
 
 Func Delta()
 If WinExists("ORCAview - WHPC", "Ready") Then
-WinClose("ORCAview - WHPC", "Ready")
+	WinClose("ORCAview - WHPC", "Ready")
+ 	Sleep (2000)
 EndIf
 Run("C:\Program Files\Delta Controls\3.33\System\ORCAview.exe")
 WinWait("Logon")
 Login()
 WinWait("ORCAview - WHPC")
 WinActivate("ORCAview - WHPC", "Ready")
-;MsgBox($MB_OK, "TITLE", "GENERSATOR")
+;MsgBox($MB_OK, "TITLE", "GENERATOR")
 Gotoreport()
 Savereport($month, $day, $year)
 Sleep(2000)
@@ -68,22 +69,19 @@ EndFunc
 Func Gotoreport()
    WinActivate("ORCAview - WHPC")
    Sleep(1000)
-   Send("!t")
-   Send("n")
+   WinMenuSelectItem("ORCAview - WHPC","","&Tools","&Navigator")
    Sleep(1000)
    WinWait("Navigator - Network")
    WinActivate("Navigator - Network")
    ControlClick("Navigator - Network","","[CLASS:SysListView32; INSTANCE:1]", "left",2,11,64)
-
 EndFunc
 
 Func Savereport($monthname, $day, $year)
-   Sleep(700)
+   Sleep(750)
    ControlClick("Navigator - Reports","","[CLASS:SysListView32; INSTANCE:1]", "right",1,47, 28)
-   Sleep(650)
-   Send("e")
-   WinWait("Exporting Records")
-   WinClose("Navigator - Reports")
+   Sleep(250)
+   ControlSend("Navigator - Reports","","[CLASS:SysListView32; INSTANCE:1]", "e")
+WinWait("Exporting Records")
 EndFunc   
 
 Func Move_report()
@@ -92,6 +90,8 @@ EndFunc
 
 Func report_generator()
 ControlClick("Program Manager","","[CLASS:SysListView32; INSTANCE:1]", "left",2, 33, 399)
+;Local $path=FileOpenDialog ( "title", "C:\Documents and Settings\Maintenance\Start Menu\Programs\Hewlett-Packard Company\", "All (*.*)")
+;MsgBox($MB_OK, "title", $path)
 WinWait("Form1")
 WinActivate("Form1")
 ;select the location
