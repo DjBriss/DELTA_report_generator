@@ -21,13 +21,13 @@ time_in_report()
 EndIf 
 
 Func Delta()
-If Not WinExists("ORCAview - WHPC", "Ready") Then
-;MsgBox($MB_OK, "TITLE", "BEFORE ")
+If WinExists("ORCAview - WHPC", "Ready") Then
+WinClose("ORCAview - WHPC", "Ready")
+EndIf
 Run("C:\Program Files\Delta Controls\3.33\System\ORCAview.exe")
 WinWait("Logon")
 Login()
 WinWait("ORCAview - WHPC")
-EndIf
 WinActivate("ORCAview - WHPC", "Ready")
 ;MsgBox($MB_OK, "TITLE", "GENERSATOR")
 Gotoreport()
